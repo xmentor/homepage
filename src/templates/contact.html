@@ -1,0 +1,30 @@
+<article id="kontakt" class="article article--contact">
+    <h2 class="article__title">
+        Kontakt
+    </h2>
+    <div class="article__content article__content--contact contact">
+        <form id="contact-form" class="contact__form form" action="mail.php" method="post">
+            <div class="form__row form__row--required">
+                <label for="name" class="visuallyhidden">
+                    Imię *(Pole wymagane):
+                </label>
+                <input id="name" name="name" class="form__input" placeholder="Podaj imię" required>  
+            </div>
+            <div class="form__row form__row--required">
+                <label for="mail" class="visuallyhidden">
+                    E-mail *(Pole wymagane):
+                </label>
+                <input type="email" id="mail" name="mail" class="form__input" placeholder="Podaj e-mail" required>
+            </div>
+            <div class="form__row form__row--msg form__row--required">
+                <label for="message" class="visuallyhidden">
+                    Wiadomość *(Pole wymagane):
+                </label>
+                <textarea rows="7" id="message" name="msg" class="form__input" placeholder="Jak mogę Ci pomóc?" required></textarea>
+            </div>
+            <button type="submit" class="form__sendbtn">
+                Wyślij
+            </button>
+        </form>
+    </div>
+</article>

@@ -1,0 +1,38 @@
+*,
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+body{
+    background-color: #f9f9f9;
+    font: 1em 'Open Sans', Arial, sans-serif;
+}
+p{
+    margin-bottom: 12px;
+}
+img{
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+.visuallyhidden{
+    position: absolute;
+    clip: rect(0,0,0,0);
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    &.focus{
+        color: #fff;
+        &:focus{
+            clip: auto;
+            width: auto;
+            height: auto;
+            margin: 20px;
+        }
+    }
+}
+.main{
+    outline: 0;
+}

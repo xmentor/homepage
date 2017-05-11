@@ -1,0 +1,25 @@
+.header{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #A60A2D;
+    /* autoprefixer: off */
+    background: -webkit-radial-gradient(center, #dc143c, #580818);
+    background: -moz-radial-gradient(center, #dc143c, #580818);
+    background: -o-radial-gradient(center, #dc143c, #580818);
+    background: -ms-radial-gradient(center, #dc143c, #580818);
+    background: radial-gradient(center, #dc143c, #580818);
+    /* autoprefixer: on */
+    background-attachment: fixed;
+    color: #eee;
+    text-align: center;
+    margin-bottom: 75px;
+    &__logo{
+        font-size: 3.5em;
+        font-weight: 600;
+        text-transform: capitalize;
+        text-shadow: 3px 3px 3px rgba(0,0,0,0.5);  
+    }
+}
