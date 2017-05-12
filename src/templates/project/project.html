@@ -1,0 +1,17 @@
+@@if (repo !== '') {
+    <li class="project__projects photo">
+        <figure class="photo__figure">
+            <a href="@@repo" class="photo__repo-link" title="Przejdź do repozytorium na GitHubie">
+                <img src="@@thumbnail" alt="screenshot" aria-describedby="caption_project@@num">
+            </a>
+            <figcaption id="caption_project@@num" class="visuallyhidden photo__caption">
+                @@desc
+            </figcaption>
+        </figure>
+    </li>
+}
+@@if (repo === '') {
+    <li class="project__projects">
+        <img src="/img/projects/empty.jpg" alt="">   
+    </li>
+}

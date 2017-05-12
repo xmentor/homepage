@@ -4,45 +4,29 @@
     </h2>
     <div class="article__content projects">
         <ul class="projects__list project">
-            <li class="project__projects photo">
-                <figure class="photo__figure">
-                    <a href="https://github.com/xmentor/mini_lightbox" class="photo__repo-link" title="Przejdź do repozytorium na GitHubie">
-                        <img src="/img/projects/lightbox-thumbnail.png" alt="screenshot" aria-describedby="caption_project1">
-                    </a>
-                    <figcaption id="caption_project1" class="visuallyhidden photo__caption">
-                        Prosty lightbox, pozwalający wyświetlać zdjęcia w większym rozmiarze. Przejdź do repozytorium na GitHubie.
-                    </figcaption>
-                </figure>
-            </li>
-            <li class="project__projects photo">
-                <figure class="photo__figure">
-                    <a href="https://github.com/xmentor/TodoList" class="photo__repo-link" title="Przejdź do repozytorium na GitHubie">
-                        <img src="/img/projects/todoList-thumbnail.png" alt="screenshot" aria-describedby="caption_project2">
-                    </a>
-                    <figcaption id="caption_project2" class="visuallyhidden photo__caption">
-                        Prosta aplikacja do tworzenia listy zadań, aplikacja pisana w Vanilla JS, listę zadań można drukować. Przejdź do repozytorium na GitHubie.
-                    </figcaption>
-                </figure>
-            </li>
-            <li class="project__projects photo">
-                <figure class="photo__figure">
-                    <a href="https://github.com/xmentor/weather" class="photo__repo-link" title="Przejdź do repozytorium na GitHubie">
-                        <img src="/img/projects/weather-thumbnail.png" alt="screenshot" aria-describedby="caption_project3">
-                    </a>
-                    <figcaption id="caption_project3" class="visuallyhidden photo__caption">
-                        Aplikacja wyświetlająca informacje o pogodzie w wybranym miejscu. Przejdź do repozytorium na GitHubie.
-                    </figcaption>
-                </figure>
-            </li>
-            <li class="project__projects photo">
-                <img src="/img/projects/empty.jpg" alt="">   
-            </li>
-            <li class="project__projects photo">
-                <img src="/img/projects/empty.jpg" alt="">   
-            </li>
-            <li class="project__projects photo">
-                <img src="/img/projects/empty.jpg" alt="">   
-            </li>
+            @@loop('project/project.html', [
+                {
+                    "repo": "https://github.com/xmentor/mini_lightbox", 
+                    "thumbnail": "/img/projects/lightbox-thumbnail.png", 
+                    "desc": "Prosty lightbox, pozwalający wyświetlać zdjęcia w większym rozmiarze. Przejdź do repozytorium na GitHubie.", 
+                    "num": "1"
+                },
+                {
+                    "repo": "https://github.com/xmentor/TodoList", 
+                    "thumbnail": "/img/projects/todoList-thumbnail.png", 
+                    "desc": "Prosta aplikacja do tworzenia listy zadań, aplikacja pisana w Vanilla JS, listę zadań można drukować. Przejdź do repozytorium na GitHubie.", 
+                    "num": "2"
+                },
+                {
+                    "repo": "https://github.com/xmentor/weather", 
+                    "thumbnail": "/img/projects/weather-thumbnail.png", 
+                    "desc": "Aplikacja wyświetlająca informacje o pogodzie w wybranym miejscu. Przejdź do repozytorium na GitHubie.", 
+                    "num": "3"
+                },
+                {"repo": "", "thumbnail": "", "": "", "num": "4"},
+                {"repo": "", "thumbnail": "", "": "", "num": "5"},
+                {"repo": "", "thumbnail": "", "": "", "num": "6"}
+            ])
         </ul>
     </div>
 </article>
