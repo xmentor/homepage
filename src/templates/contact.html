@@ -3,7 +3,7 @@
         Kontakt
     </h2>
     <div class="article__content article__content--contact contact">
-        <form id="contact-form" class="contact__form form" action="mail.php" method="post">
+        <form class="contact__form form" action="mail.php" method="post">
             <div class="form__row form__row--required">
                 <label for="name" class="visuallyhidden">
                     Imię *(Pole wymagane):
@@ -26,5 +26,11 @@
                 Wyślij
             </button>
         </form>
+        <div class="contact__info info" role="dialog" aria-labelledby="info__content" tabindex="-1">
+            <button class="info__button" aria-label="Zamknij tę wiadomość">
+                Zamknij
+            </button>
+            <span id="info__content" class="info__content"></span>
+        </div>
     </div>
 </article>

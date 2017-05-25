@@ -1,59 +1,73 @@
-(function(c) {
-    function elementMsgExsist() {
-        return document.querySelector(".contact__msg") !== null;
+(function(contactForm) {
+    'use strict';
+    
+    let activedElement = null;
+    
+    const infoContainer = document.querySelector('.contact__info');
+    
+    function hideInfo() {
+        infoContainer.classList.remove('contact__info--visible');
+        activedElement.focus();
     }
-    function e(b) {
-        const tabKey = 9,
-            enterKey = 13,
-            escKey = 27;
-        if ((b.keyCode !== tabKey) || (b.keyCode !== enterKey) || (b.keyCode !== escKey) || !elementMsgExsist()) {
+    
+    function clickHandler(e) {
+        const t = e.target;
+        if(!t.classList.contains('info__button')) {
             return false;
         }
-        b.preventDefault();
-        const msg = document.querySelector(".contact__msg");
 
-        msg.parentNode.removeChild(msg);
-        document.removeEventListener("keydown", e);
+        hideInfo();
     }
-    function d(b) {
-        if (!elementMsgExsist()) {
-            var a = document.createElement("div"),
-                contact = document.querySelector(".article__content--contact")
-            a.classList.add("contact__msg");
-            a.classList.add("msg");
-            a.setAttribute("role", "dialog");
-            a.setAttribute("aria-labelledby", "msg-content");
-            a.setAttribute("tabindex", "-1");
-            a.innerHTML = "<button class='msg__close' aria-label='Zamknij wiadomo\u015b\u0107'>\n<span class='visuallyhidden'>Zamknij wiadomo\u015b\u0107</span>\n</button>\n<div id='msg-content' class='msg__content'>" + b + "</div>";
-            contact.appendChild(a);
-            a.focus();
-            document.querySelector(".msg__close").addEventListener("click", function(a) {
-                const t = a.target,
-                    parentTarget = t.parentNode;
-                parentTarget.parentNode.removeChild(parentTarget);
-            });
-            document.addEventListener("keydown", e);
-        } else {
-            const msg = document.querySelector(".contact__msg");
-            msg.parentNode.removeChild(msg);
-            d(b);
+    
+    function keyHandler(e) {
+        const escKey = 27;
+        if (e.keyCode !== escKey) {
+            return false;
         }
+        
+        hideInfo();
     }
-    function f(b) {
-        b.preventDefault();
-        if (c.checkValidity()) {
-            var a = new XMLHttpRequest;
-            b = new FormData(c);
-            a.open("POST", "mail.php", !0);
-            a.onreadystatechange = function(b) {
-                4 === a.readyState && (200 === a.status ? d(a.responseText) : d("B\u0142\u0105d - spr\u00f3buj p\u00f3\u017aniej"));
+
+    function showInfo(info) {       
+        const infoContainerIsVisible = infoContainer.classList.contains('contact__info--visible');
+        const infoContent = document.querySelector('.info__content');
+        
+        if(!infoContainerIsVisible) {
+            infoContainer.classList.add('contact__info--visible');
+        }
+        activedElement = document.activeElement;
+        infoContainer.focus();
+        infoContent.textContent = info;
+    }
+    
+    function sendMessage(e) {
+        e.preventDefault();
+        if (contactForm.checkValidity()) {
+            const XHR = new XMLHttpRequest();
+            const formData = new FormData(contactForm);
+            
+            XHR.onreadystatechange = () => {
+                if(XHR.readyState === 4) {
+                    if(XHR.status === 200) {
+                        showInfo(XHR.responseText);
+                        contactForm.reset();
+                    } else {
+                        showInfo('Problem z żądaniem - spróbuj później.');
+                    }
+                }
             };
-            a.send(b);
-            c.reset();
+            
+            XHR.open("POST", "mail.php", true);
+            XHR.send(formData);
         }
     }
-    if (!window.XMLHttpRequest) {
-        return !1;
+    
+    if(!window.XMLHttpRequest) {
+        throw Error('Twoja przeglądarka nie obsługuje XMLHttpRequest.');
     }
-    c.addEventListener("submit", f);
-})(document.querySelector("#contact-form"));
+    
+    contactForm.addEventListener("submit", sendMessage);
+    document.addEventListener("keydown", keyHandler);
+    document.addEventListener("click", clickHandler);
+    
+})(document.querySelector(".contact__form"));
