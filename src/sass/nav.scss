@@ -18,9 +18,14 @@
         padding: 0;
         margin: 0;
         border: 0;
+        background-color: transparent;
         color: #FFFFFF;
         display: none;
         overflow: hidden;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 999;
         &:hover{
             cursor: pointer;
         }
@@ -31,11 +36,7 @@
             outline-offset: -1px;
         }
         @media (max-width: 640px) {
-            position: absolute;
-            top: 10px;
-            right: 10px;   
             display: block;
-            z-index: 999;
         }
     }
     &__menu{
@@ -47,8 +48,7 @@
             width: 100%;
             display: none;
             font-size: 1.1em;
-            &--open,
-            &:target{
+            &--open{
                 margin-top: 0;
                 padding-top: 20px;
                 display: block;
@@ -99,6 +99,27 @@
         &:focus{
             &:after{
                 width: 100%;
+            }
+        }
+    }
+}
+.no-js{
+    @media (max-width: 640px) {
+        .nav{
+            height: auto;
+            padding-top: 10px;
+            &__btn{
+                display: none;
+            }
+            &__menu{
+                display: flex;
+                font-size: .9em;
+            }
+        }
+        .menu__item{
+            margin: 0 50px 0 0;
+            &--last{
+                margin-right: 0;
             }
         }
     }
