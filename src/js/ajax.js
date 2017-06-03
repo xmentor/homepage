@@ -49,8 +49,11 @@
             XHR.onreadystatechange = () => {
                 if(XHR.readyState === 4) {
                     if(XHR.status === 200) {
-                        showInfo(XHR.responseText);
-                        contactForm.reset();
+                        const response = JSON.parse(XHR.responseText);
+                        showInfo(response.info);
+                        if(response.type === 4) {
+                            contactForm.reset();
+                        }
                     } else {
                         showInfo('Problem z żądaniem - spróbuj później.');
                     }
