@@ -23,7 +23,8 @@
         box-shadow: 0 0 6px #444444;
         border-radius: 3px;
         outline: 0;
-
+        text-align: center;
+        
         position: fixed;
         left: 50%;
         top: 50%;
@@ -168,7 +169,7 @@
         padding: 0;
         border: 0;
         background-color: transparent;
-        color: #A60A2D;
+        color: #222222;
         text-decoration: underline;
         font-size: 1em;
         position: absolute;
@@ -179,8 +180,9 @@
             cursor: pointer; 
         }
         &:focus{
-            outline: 1px dotted #A60A2D;
-            outline-offset: 1px;   
+            outline: 1px dotted #222222;
+            outline-offset: 1px;
+            text-decoration: none;
         }
         &::-moz-focus-inner{
             border: 0;
