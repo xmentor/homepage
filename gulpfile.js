@@ -17,7 +17,7 @@
     const js = `scripts${timestamp}.js`;
 
     gulp.task('delFiles', function() {
-        return del(['dist']);
+        return del(['dist/js/**', 'dist/css/**']);
     });
     
     gulp.task('sass', ['delFiles'], function() {
@@ -83,6 +83,8 @@
         return gulp.src('dist/*.html', {read: false})
             .pipe(sitemap({siteUrl: 'http://www.kkondratowicz.pl'}))
             .pipe(gulp.dest('dist'));
-});
+    });
+    
+    gulp.watch(['src/*.html', 'src/js/**', 'src/sass/**', 'src/templates/**'], ['default']);
     
 }(require('gulp')));
