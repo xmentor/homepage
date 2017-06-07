@@ -8,9 +8,7 @@
     /* autoprefixer: off */
     background: -webkit-radial-gradient(center, #dc143c, #580818);
     background: -moz-radial-gradient(center, #dc143c, #580818);
-    background: -o-radial-gradient(center, #dc143c, #580818);
-    background: -ms-radial-gradient(center, #dc143c, #580818);
-    background: radial-gradient(center, #dc143c, #580818);
+    background: radial-gradient(ellipse, #dc143c, #580818);
     /* autoprefixer: on */
     background-attachment: fixed;
     color: #eee;
