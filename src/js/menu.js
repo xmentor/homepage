@@ -5,12 +5,11 @@
             const isOpen = menu.classList.contains('nav__menu--open');
 
             if(isOpen) {
-                menuToggler.setAttribute('aria-expanded', !isOpen);
                 menu.classList.remove('nav__menu--open');
             } else {
-                menuToggler.setAttribute('aria-expanded', !isOpen);
                 menu.classList.add('nav__menu--open');
             }
+            menuToggler.setAttribute('aria-expanded', !isOpen);
         }   
         menuToggler.addEventListener('click', (e) => {     
             toggleMenu();
