@@ -83,22 +83,29 @@
         text-decoration: none;
         color: #FFFFFF;
         position: relative;
+        &:before,
         &:after{
             content: "";
             position: absolute;
             display: block;
             bottom: -3px;
-            left: 0;
             width: 0;
             height: 1px;
             background-color: #FFFFFF;
             box-shadow: 2px 2px 3px rgba(0, 0, 0, .5);
             transition: width .2s ease-in-out;
         }
+        &:before{
+            left: 0;
+        }
+        &:after{
+            right: 0;
+        }
         &:hover,
         &:focus{
+            &:before,
             &:after{
-                width: 100%;
+                width: 50%;
             }
         }
     }
