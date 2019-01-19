@@ -5,44 +5,49 @@
     const sass = require('gulp-sass');
     const autoprefixer = require('gulp-autoprefixer');
     const cssmin = require('gulp-cssmin');
-    const fileinclude = require('gulp-file-include');
-    const closureCompiler = require('gulp-closure-compiler');
-    const htmlmin = require('gulp-htmlmin');
+    const replace = require('gulp-string-replace');
     const copy = require('gulp-copy');
+    const pixrem = require('gulp-pixrem');
+    const webpack = require('webpack');
+    const gulpWebpack = require('gulp-webpack');
+    const webpackConfig = require('./config/bundler.js');
+    const livereload = require('gulp-livereload');
     const sitemap = require('gulp-sitemap');
     const rename = require('gulp-rename');
+    const fileinclude = require('gulp-file-include');
+    const htmlmin = require('gulp-htmlmin');
     
+    const browserSupport = ['last 2 version', 'safari >= 5', 'ie >= 11', 'ios >= 8', 'android >= 4.4'];
+
     const timestamp = Date.now();
     const css = `main${timestamp}.css`;
-    const js = `scripts${timestamp}.js`;
+    const js = `main${timestamp}.js`;
 
     gulp.task('delFiles', function() {
         return del(['dist/js/**', 'dist/css/**']);
     });
-    
+
     gulp.task('sass', ['delFiles'], function() {
         return gulp.src('src/sass/main.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(rename({suffix: timestamp}))
             .pipe(gulp.dest('dist/css'));
     });
-
-    gulp.task('autoprefixer', ['sass'], function() {
+    
+    gulp.task('cssmin', ['sass'], function() {
         return gulp.src('dist/css/*.css')
             .pipe(autoprefixer({
-                browsers: ['last 2 versions'],
+                browsers: browserSupport,
                 cascade: false
+            }))
+            .pipe(cssmin())
+            .pipe(pixrem('10px', {
+                browsers: browserSupport 
             }))
             .pipe(gulp.dest('dist/css'));
     });
 
-    gulp.task('cssmin', ['autoprefixer'], function() {
-        return gulp.src('dist/css/*.css')
-            .pipe(cssmin())
-            .pipe(gulp.dest('dist/css'));
-    });
-
-    gulp.task('include', ['cssmin'], function() {
+    gulp.task('include', ['cssmin'], () => {
         gulp.src(['src/index.html'])
             .pipe(fileinclude({
                 prefix: '@@',
@@ -54,37 +59,45 @@
         }))
         .pipe(gulp.dest('dist'));
     });
-    
-    gulp.task('jsCompiler', ['include'], function() {
-        return gulp.src('src/js/*.js')
-            .pipe(closureCompiler({fileName: js,
-                                   compilerFlags: {
-                                       compilation_level: 'SIMPLE_OPTIMIZATIONS',
-                                       language_in: 'ECMASCRIPT6_STRICT',
-                                       language_out: 'ECMASCRIPT5_STRICT'
-                                   }
-                                  }))
-            .pipe(gulp.dest('dist/js'));
+
+    gulp.task('js', ['include'], () => {
+        return gulp.src('src/js/main.js')
+            .pipe(gulpWebpack(webpackConfig, webpack))
+            .pipe(rename((path) => {
+                if(path.extname === '.map') {
+                    return false;
+                }
+
+                path.basename = `main${timestamp}`;
+            }))
+            .pipe(gulp.dest('dist/js/'));
     });
-    
-    gulp.task('minifyHTML', ['jsCompiler'], function() {
+
+    gulp.task('whitespace', ['js'], () => {
+        return gulp.src(['dist/js/*.js'])
+            .pipe(replace(/\\n\s+/g, ''))
+            .pipe(gulp.dest('dist/js/'));
+    });
+
+    gulp.task('minifyHTML', ['whitespace'], () => {
         return gulp.src('dist/*.html')
             .pipe(htmlmin({collapseWhitespace: true}))
             .pipe(gulp.dest('dist'));
     });
-    
-    
-    gulp.task('copy', ['minifyHTML'], function() {
-       return gulp.src(['src/img/**', 'src/*.ico', 'src/*.xml', 'src/*.json'])
-           .pipe(copy('dist', {prefix: 1}))
+
+    gulp.task('copy', ['minifyHTML'], () => {
+        return gulp.src(['src/img/**', 'src/*.ico', 'src/*.xml', 'src/*.json'])
+            .pipe(copy('dist', {prefix: 1}))
     });
-    
-    gulp.task('default', ['copy'], function () {
+     
+    gulp.task('sitemap', ['copy'], () => {
         return gulp.src('dist/*.html', {read: false})
-            .pipe(sitemap({siteUrl: 'http://www.kkondratowicz.pl'}))
+            .pipe(sitemap({siteUrl: 'https://www.kkondratowicz.pl'}))
             .pipe(gulp.dest('dist'));
     });
-    
-    gulp.watch(['src/*.html', 'src/js/**', 'src/sass/**', 'src/templates/**'], ['default']);
-    
+
+    gulp.task('default', ['sitemap'], () => {
+        gulp.watch(['src/*.html', 'src/js/**', 'src/sass/**', 'src/templates/**'], ['default']);
+    });
+
 }(require('gulp')));
